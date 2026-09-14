@@ -1,23 +1,23 @@
 import random
+from hero import crit
 
 
 class Goblin:
-    """A completed character class students can examine as an OOP example."""
 
     def __init__(self, name):
         self.name = name
         self.health = 100
         self.attack_power = 15
 
-    def attack(self):
-        """Return a random amount of damage."""
-        return random.randint(1, self.attack_power)
+    def attack(self, target):
+        damage = random.randint(1, self.attack_power)
+        target.take_damage(damage)
 
     def take_damage(self, damage):
-        """Reduce health without allowing it to fall below zero."""
         self.health = max(0, self.health - damage)
+        if crit == True:
+            print(crit)
         print(f"{self.name} takes {damage} damage. Health: {self.health}")
 
     def is_alive(self):
-        """Return True while the goblin has health remaining."""
         return self.health > 0
