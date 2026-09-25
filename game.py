@@ -1,55 +1,52 @@
 import random
-from goblin import Goblin
+from demon import Demon
 from hero import Hero
-from boss import Brute
+from boss import Boss
 
 def main():
-    print("Welcome to the Iron Lung!")
-
+    print("Welcome To The Iron Lung.")
     hero = Hero("Markiplier")
 
-    goblins = [Goblin(f"Goblin {i+1}") for i in range(3)]
+    demons = [Demon(f"Demon {i+1}") for i in range(2)]
+    defeated_demons = 0
 
-    defeated_goblins = 0
-
-    while hero.is_alive() and any(goblin.is_alive() for goblin in goblins):
-        print("\nNew Round!")
+    while hero.is_alive() and any(demon.is_alive() for demon in demons):
+        print("You Venture Futher Into The Depths...")
         
-        target_goblin = random.choice([goblin for goblin in goblins if goblin.is_alive()])
+        target_demon = random.choice([demon for demon in demons if demon.is_alive()])
         damage = hero.strike()
-        print(f"Hero attacks {target_goblin.name} for {damage} damage!")
-        target_goblin.take_damage(damage)
+        print(f"Markiplier Blocks Out {target_demon.name} For {damage} Focus.")
+        target_demon.take_damage(damage)
 
-        if not target_goblin.is_alive():
-            defeated_goblins += 1
-            print(f"{target_goblin.name} has been defeated!")
+        if not target_demon.is_alive():
+            defeated_demons += 1
+            print(f"{target_demon.name} Has Been Warded... For Now.")
 
-        for goblin in goblins:
-            if goblin.is_alive():
-                damage = goblin.attack()
-                print(f"{goblin.name} attacks hero for {damage} damage!")
+        for demon in demons:
+            if demon.is_alive():
+                damage = demon.attack()
+                print(f"{demon.name} Attacks The Iron Lung For {damage} Force.")
                 hero.receive_damage(damage)
 
     if hero.is_alive():
-        print(f"\nThe hero has defeated all the goblins!")
+        print(f"All The Demons Have Been Wardered.")
     else:
-        print(f"\nThe hero has been defeated. Game Over.")
+        print(f"You Have Been Consumed By The Ocean Of Blood.")
 
     if hero.is_alive():
-        print("BOSS TIME!!!")
-        brutus = Brute("Brutus")
-        while hero.is_alive() and brutus.is_alive():
+        angler = Boss("The Angler")
+        while hero.is_alive() and angler.is_alive():
             damage = hero.strike()
-            brutus.take_damage(damage)
-            damage = brutus.attack()
+            angler.take_damage(damage)
+            damage = angler.attack()
             hero.receive_damage(damage)
     
     if hero.is_alive():
-        print(f"\nThe hero has defeated the BOSS!")
+        print(f"The Ship Is Saved At Last...")
     else:
-        print(f"\nThe BOSS beat the Hero. Game Over.")
+        print(f"You Have Been Consumed By The Ocean Of Blood.")
 
-    print(f"\nTotal goblins defeated: {defeated_goblins} / {len(goblins)}")
+    print(f"Total Demons Warded: {defeated_demons} / {len(demons)}.")
 
 if __name__ == "__main__":
     main()
